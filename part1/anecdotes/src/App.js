@@ -2,13 +2,17 @@ import React, { useState } from 'react'
 
 const Heading = ({ headingText }) => <h1>{headingText}</h1>
 
-const Button = ({ text, handleClick }) => {
+const Button = ({ text, handleClick }) => <button onClick={handleClick}>{text}</button>
+
+
+const Votes = ({ voteCount }) => {
   return (
     <div>
-      <button onClick={handleClick}>{text}</button>
+      has {voteCount} votes
     </div>
   )
 }
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -21,11 +25,20 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState({ 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 })
+
+  const increaseVote = () => {
+    const voteCopy = { ...votes }
+    voteCopy[selected]++
+    setVotes(voteCopy)
+  }
 
   return (
     <div>
       <Heading headingText='Anecdote of the day' />
       {anecdotes[selected]}
+      <Votes voteCount={votes[selected]} />
+      <Button text='vote' handleClick={increaseVote} />
       <Button text='next anecdote' handleClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))} />
     </div>
   )
