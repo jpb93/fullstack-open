@@ -20,6 +20,48 @@ const StatCounter = ({ text, count }) => {
   )
 }
 
+const Statistics = ({ goodCount, neutralCount, badCount }) => {
+  const total = goodCount + neutralCount + badCount
+  const Average = (good, bad) => ((good * 1) + (bad * -1)) / total
+
+  if (total === 0 ) 
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+
+  return (
+    <div>
+      <StatCounter 
+        text='good' 
+        count={goodCount} 
+      />
+      <StatCounter 
+        text='neutral' 
+        count={neutralCount} 
+      />
+      <StatCounter 
+        text='bad' 
+        count={badCount} 
+      />
+      <StatCounter 
+        text='all' 
+        count={total} 
+      />
+      <StatCounter 
+        text='average' 
+        count={Average(goodCount, badCount)} 
+      />
+      <StatCounter
+        text='positive'
+        count={`${(goodCount / total) * 100} %`}
+      />
+      
+    </div>
+  )
+}
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
@@ -45,18 +87,13 @@ const App = () => {
 
       <Heading headingText='statistics' />
       
-      <StatCounter 
-        text='good' 
-        count={good} 
+      
+      <Statistics 
+        goodCount={good}
+        neutralCount={neutral}
+        badCount={bad}
       />
-      <StatCounter 
-        text='neutral' 
-        count={neutral} 
-      />
-      <StatCounter 
-        text='bad' 
-        count={bad} 
-      />
+
     </div>
   )
 }
