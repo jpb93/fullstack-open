@@ -12,11 +12,16 @@ const Button = ({ text, handleClick }) => {
   )
 }
 
-const StatCounter = ({ text, count }) => {
+const StatisticLine = ({ text, count }) => {
   return (
-    <div>
-      {text} {count}
-    </div>
+    <tr>
+      <th>
+      {text} 
+      </th>
+      <td>
+        {count}
+      </td> 
+    </tr>
   )
 }
 
@@ -33,30 +38,32 @@ const Statistics = ({ goodCount, neutralCount, badCount }) => {
 
   return (
     <div>
-      <StatCounter 
-        text='good' 
-        count={goodCount} 
-      />
-      <StatCounter 
-        text='neutral' 
-        count={neutralCount} 
-      />
-      <StatCounter 
-        text='bad' 
-        count={badCount} 
-      />
-      <StatCounter 
-        text='all' 
-        count={total} 
-      />
-      <StatCounter 
-        text='average' 
-        count={Average(goodCount, badCount)} 
-      />
-      <StatCounter
-        text='positive'
-        count={`${(goodCount / total) * 100} %`}
-      />
+      <table>
+        <StatisticLine 
+          text='good' 
+          count={goodCount} 
+        />
+        <StatisticLine 
+          text='neutral' 
+          count={neutralCount} 
+        />
+        <StatisticLine 
+          text='bad' 
+          count={badCount} 
+        />
+        <StatisticLine 
+          text='all' 
+          count={total} 
+        />
+        <StatisticLine 
+          text='average' 
+          count={Average(goodCount, badCount).toFixed(1)} 
+        />
+        <StatisticLine
+          text='positive'
+          count={`${((goodCount / total) * 100).toFixed(1)} %`}
+        />
+      </table>
       
     </div>
   )
@@ -86,7 +93,6 @@ const App = () => {
       />
 
       <Heading headingText='statistics' />
-      
       
       <Statistics 
         goodCount={good}
