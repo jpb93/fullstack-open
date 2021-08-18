@@ -4,14 +4,7 @@ const Heading = ({ headingText }) => <h1>{headingText}</h1>
 
 const Button = ({ text, handleClick }) => <button onClick={handleClick}>{text}</button>
 
-
-const Votes = ({ voteCount }) => {
-  return (
-    <div>
-      has {voteCount} votes
-    </div>
-  )
-}
+const Votes = ({ voteCount }) => <div>has {voteCount} votes</div>
 
 const App = () => {
   const anecdotes = [
@@ -33,6 +26,8 @@ const App = () => {
     setVotes(voteCopy)
   }
 
+  const getMostVoted = () => Object.keys(votes).reduce((a ,b) => votes[a] > votes[b] ? a : b)
+
   return (
     <div>
       <Heading headingText='Anecdote of the day' />
@@ -40,6 +35,9 @@ const App = () => {
       <Votes voteCount={votes[selected]} />
       <Button text='vote' handleClick={increaseVote} />
       <Button text='next anecdote' handleClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))} />
+      <Heading headingText='Anecdote with most votes' />
+      {anecdotes[getMostVoted()]}
+      <Votes voteCount={votes[getMostVoted()]} />
     </div>
   )
 }
